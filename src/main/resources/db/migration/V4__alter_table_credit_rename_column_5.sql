@@ -1,0 +1,1 @@
+ALTER TABLE credit RENAME COLUMN number_of_installment to number_of_installments
