@@ -7,6 +7,7 @@ import io.mockk.junit5.MockKExtension
 import io.mockk.just
 import io.mockk.runs
 import io.mockk.verify
+import me.dio.democreditapp.builder.CustomerBuilder.Companion.buildCustomer
 import me.dio.democreditapp.entity.Address
 import me.dio.democreditapp.entity.Customer
 import me.dio.democreditapp.exception.BusinessException
@@ -86,31 +87,5 @@ class CustomerServiceTest {
         //then
         verify(exactly = 1) { customerRepository.findById(testId) }
         verify(exactly = 1) { customerRepository.delete(testCustomer) }
-    }
-
-    companion object {
-        fun buildCustomer(
-            firstName: String = "Fulano",
-            lastName: String = "de Tal",
-            cpf: String = "12345678910",
-            email: String = "fulanodetal@mail.com",
-            password: String = "123456",
-            zipCode: String = "12345000",
-            street: String = "Rua do fulano de tal",
-            income: BigDecimal = BigDecimal.valueOf(1000.0),
-            id: Long = 1L
-        ) = Customer (
-            firstName = firstName,
-            lastName = lastName,
-            cpf = cpf,
-            email = email,
-            password = password,
-            address = Address(
-                zipCode = zipCode,
-                street = street
-            ),
-            income = income,
-            id = id
-        )
     }
 }
