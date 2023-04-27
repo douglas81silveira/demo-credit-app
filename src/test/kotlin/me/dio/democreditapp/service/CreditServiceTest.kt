@@ -5,20 +5,17 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
+import me.dio.democreditapp.builder.CreditBuilder.Companion.buildCredit
+import me.dio.democreditapp.builder.CustomerBuilder.Companion.buildCustomer
 import me.dio.democreditapp.entity.Credit
-import me.dio.democreditapp.entity.Customer
-import me.dio.democreditapp.enummeration.Status
 import me.dio.democreditapp.exception.BusinessException
 import me.dio.democreditapp.repository.CreditRepository
-import me.dio.democreditapp.service.CustomerServiceTest.Companion.buildCustomer
 import me.dio.democreditapp.service.impl.CreditService
 import me.dio.democreditapp.service.impl.CustomerService
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.ActiveProfiles
-import java.math.BigDecimal
-import java.time.LocalDate
 import java.util.*
 
 @ActiveProfiles("test")
@@ -93,25 +90,5 @@ class CreditServiceTest {
         Assertions.assertThatExceptionOfType(BusinessException::class.java)
             .isThrownBy { creditService.findByCreditCode(testCutomerId, testCreditCode) }
             .withMessage("CreditCode $testCreditCode not found!")
-    }
-
-    companion object {
-        fun buildCredit(
-            creditCode: UUID = UUID.randomUUID(),
-            creditValue: BigDecimal = BigDecimal.valueOf(50000.0),
-            dayFirstInstallment: LocalDate = LocalDate.now(),
-            numberOfInstallments: Int = 60,
-            status: Status = Status.IN_PROGRESS,
-            customer: Customer = CustomerServiceTest.buildCustomer(),
-            id: Long = 1L
-        ) = Credit(
-            creditCode = creditCode,
-            creditValue = creditValue,
-            dayFirstInstallment = dayFirstInstallment,
-            numberOfInstallments = numberOfInstallments,
-            status = status,
-            customer = customer,
-            id = id
-        )
     }
 }
